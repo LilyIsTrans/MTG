@@ -3,16 +3,18 @@
 
 #include "Walnut/Image.h"
 
+#include <iostream>
+#include "MTG_UUID.h"
+
 class ExampleLayer : public Walnut::Layer
 {
 public:
 	virtual void OnUIRender() override
 	{
 		ImGui::Begin("Hello");
-		ImGui::Button("Button");
+		if (ImGui::Button("Button"))
+			std::cout << MTG_UUID().id << std::endl;
 		ImGui::End();
-
-		ImGui::ShowDemoWindow();
 	}
 };
 
