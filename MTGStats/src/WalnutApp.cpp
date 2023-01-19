@@ -18,6 +18,11 @@ public:
 			std::cout << MTG_UUID().id << std::endl;
 		ImGui::End();
 
+		RenderMainDeck();
+		
+	}
+
+	void RenderMainDeck() {
 		ImGui::Begin("Deck");
 		ImGui::Text("New card: ");
 		ImGui::InputText("Name", deck.newCardName, sizeof(deck.newCardName));
@@ -41,8 +46,6 @@ public:
 			ImGui::PopID();
 		}
 		ImGui::End();
-
-		
 	}
 
 
