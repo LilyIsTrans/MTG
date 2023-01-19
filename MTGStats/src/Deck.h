@@ -19,6 +19,7 @@ public:
 	Card() {
 		name = "";
 		count = 0;
+		desired_minimum = 0;
 		id = MTG_UUID();
 	}
 
@@ -32,6 +33,7 @@ public:
 	std::string name;
 	MTG_UUID id;
 	int count;
+	int desired_minimum;
 };
 
 
@@ -44,6 +46,9 @@ public:
 
 
 	size_t size() const;
+
+	uint64_t card_count() const;
+	uint64_t desired_min_hand_size() const;
 
 public:
 	std::unordered_map<uuids::uuid, Card> cards;
