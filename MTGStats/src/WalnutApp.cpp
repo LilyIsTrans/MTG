@@ -19,13 +19,15 @@ public:
 		ImGui::End();
 
 		deck.RenderGui();
+
+		
 	}
 
 
 
 
 private:
-	Deck<60> deck;
+	Deck deck;
 };
 
 // ENTRY POINT

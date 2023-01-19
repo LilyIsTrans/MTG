@@ -25,7 +25,7 @@ public:
 		id = gen();
 	}
 
-	constexpr bool operator==(const MTG_UUID& other) {
+	bool operator==(const MTG_UUID& other) {
 		return id == other.id;
 	}
 
