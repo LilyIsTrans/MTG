@@ -13,6 +13,10 @@ static std::seed_seq seq(std::begin(seed_data), std::end(seed_data));
 static std::mt19937 generator = std::mt19937(seq);
 static uuids::uuid_random_generator gen(generator);
 
+
+
+
+
 class MTG_UUID
 {
 public:

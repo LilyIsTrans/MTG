@@ -1,7 +1,7 @@
 #pragma once
 
 #include <cstdint>
-
+#include <vector>
 
 
 
@@ -38,3 +38,4 @@ constexpr long double n_or_more_matches(const uint64_t minimum_matches_drawn, co
 		acc += hypergeometric_probability(matches, total_cards, cards_drawn, total_matches);
 	return acc;
 }
+

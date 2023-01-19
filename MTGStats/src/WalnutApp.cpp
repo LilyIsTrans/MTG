@@ -18,7 +18,29 @@ public:
 			std::cout << MTG_UUID().id << std::endl;
 		ImGui::End();
 
-		deck.RenderGui();
+		ImGui::Begin("Deck");
+		ImGui::Text("New card: ");
+		ImGui::InputText("Name", deck.newCardName, sizeof(deck.newCardName));
+		ImGui::DragInt("Count", &deck.newCardCount);
+		if (ImGui::Button("Add to deck"))
+		{
+			std::string newName = "";
+			newName.append(deck.newCardName);
+			Card newCard = Card(newName);
+			newCard.count = deck.newCardCount;
+			deck[newCard.id.id] = newCard;
+			std::fill(deck.newCardName, deck.newCardName + sizeof(deck.newCardName), 0);
+		}
+
+		for (auto& [id, card] : deck.cards)
+		{
+			ImGui::PushID(int_from_id(id));
+			ImGui::Separator();
+			ImGui::Text(card.name.c_str());
+			ImGui::DragInt("Count", &card.count);
+			ImGui::PopID();
+		}
+		ImGui::End();
 
 		
 	}
@@ -28,6 +50,7 @@ public:
 
 private:
 	Deck deck;
+	Deck desired_hand;
 };
 
 // ENTRY POINT

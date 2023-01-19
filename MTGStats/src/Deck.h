@@ -6,6 +6,10 @@
 #include "imgui.h"
 #include <unordered_map>
 
+
+int int_from_id(uuids::uuid id);
+
+
 class Card
 {
 public:
@@ -34,7 +38,6 @@ public:
 class Deck
 {
 public:
-	void RenderGui();
 
 	Deck();
 	Card& operator[](uuids::uuid idx);
@@ -42,7 +45,7 @@ public:
 
 	size_t size() const;
 
-private:
+public:
 	std::unordered_map<uuids::uuid, Card> cards;
 	char newCardName[256];
 	int newCardCount;
