@@ -66,6 +66,8 @@ public:
 			std::fill(deck.newCardName, deck.newCardName + sizeof(deck.newCardName), 0);
 		}
 
+		std::vector<uuids::uuid> to_delete;
+
 		for (auto& [id, card] : deck.cards)
 		{
 			ImGui::PushID(int_from_id(id));
@@ -73,8 +75,18 @@ public:
 			ImGui::Text(card.name.c_str());
 			ImGui::DragInt("Count", &card.count);
 			ImGui::DragInt("Desired minimum in initial hand", &card.desired_minimum);
+			if (ImGui::Button("Remove"))
+				to_delete.push_back(id);
 			ImGui::PopID();
 		}
+
+		for (auto& id : to_delete)
+		{
+			deck.cards.erase(id);
+		}
+		to_delete.clear();
+
+
 		ImGui::End();
 	}
 
