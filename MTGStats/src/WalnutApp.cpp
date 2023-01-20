@@ -27,24 +27,6 @@ public:
 		{
 			std::string filename(buf);
 			load_deck_from_file(deck, filename);
-			try {
-				
-			}
-			catch (std::out_of_range e)
-			{
-
-			}
-			catch (std::invalid_argument e)
-			{
-
-			}
-			catch (std::ifstream::failure e)
-			{
-
-			}
-
-			
-			
 		}
 
 		ImGui::End();
@@ -95,6 +77,9 @@ public:
 		}
 		ImGui::End();
 	}
+
+	
+
 
 private:
 	Deck deck;

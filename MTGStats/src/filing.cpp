@@ -14,14 +14,12 @@ void load_deck_from_file(Deck& deck, std::string filename)
 	std::string name;
 	int count;
 	int desired_amount;
-	while (file.good())
+	while (!file.eof())
 	{
-		while (temp.back() != '\r' && temp.back() != '\n')
+		file >> name;
+		while (file.peek() != '\r' && file.peek() != '\n')
 		{
-			file >> temp;
-			name.append(temp);
-			temp.clear();
-			name.push_back(' ');
+			name.push_back(file.get());
 		}
 		
 		file >> count;
@@ -29,6 +27,7 @@ void load_deck_from_file(Deck& deck, std::string filename)
 		Card card = Card(name);
 		card.count = count;
 		card.desired_minimum = desired_amount;
+		deck.cards[card.id.id] = card;
 	}
 	file.close();
 }
