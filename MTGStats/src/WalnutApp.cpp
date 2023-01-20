@@ -3,12 +3,13 @@
 
 #include "Walnut/Image.h"
 
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include "MTG_UUID.h"
 #include "Deck.h"
-
+#include <exception>
 #include "stats.h"
+#include "filing.h"
 
 class ExampleLayer : public Walnut::Layer
 {
@@ -20,7 +21,33 @@ public:
 
 		RenderDesiredHandConfig();
 		
+		ImGui::Begin("Load");
+		ImGui::InputText("File", buf, sizeof(buf));
+		if (ImGui::Button("Load"))
+		{
+			std::string filename(buf);
+			load_deck_from_file(deck, filename);
+			try {
+				
+			}
+			catch (std::out_of_range e)
+			{
 
+			}
+			catch (std::invalid_argument e)
+			{
+
+			}
+			catch (std::ifstream::failure e)
+			{
+
+			}
+
+			
+			
+		}
+
+		ImGui::End();
 	}
 
 	void RenderDesiredHandConfig()
@@ -72,6 +99,7 @@ public:
 private:
 	Deck deck;
 	int hand_size = 7;
+	char buf[256];
 };
 
 // ENTRY POINT
@@ -93,6 +121,5 @@ Walnut::Application* Walnut::CreateApplication(int argc, char** argv)
 			ImGui::EndMenu();
 		}
 	});
-
 	return app;
 }

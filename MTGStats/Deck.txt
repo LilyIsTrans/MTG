@@ -1,0 +1,42 @@
+Quest for Ula’s Temple
+4
+1
+Clockspinning
+4
+0
+Serpent of Yawning Depths
+4
+0
+Spawning Kraken
+4
+0
+Tromokratis
+4
+0
+Inkwell Leviathan
+4
+0
+Gyruda, Doom of the Depths
+4
+0
+Trench Gorger
+4
+0
+Koma, Cosmos Serpent
+4
+0
+Reservoir Kraken
+4
+0
+Nemesis of Reason
+4
+0
+Fog Bank
+1
+0
+Turn Aside
+1
+0
+Island
+14
+1
