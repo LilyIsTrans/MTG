@@ -4,7 +4,6 @@
 #include "Walnut/Image.h"
 
 #include <fstream>
-#include <iostream>
 #include "MTG_UUID.h"
 #include "Deck.h"
 #include <exception>
@@ -91,7 +90,10 @@ public:
 	}
 
 	
-
+	ExampleLayer()
+	{
+		std::fill(buf, buf + sizeof(buf), 0);
+	}
 
 private:
 	Deck deck;

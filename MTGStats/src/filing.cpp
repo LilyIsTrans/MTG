@@ -3,13 +3,11 @@
 #include "Deck.h"
 #include <fstream>
 #include "MTG_UUID.h"
-#include <iostream>
 
 void load_deck_from_file(Deck& deck, std::string filename)
 {
 	std::ifstream file;
 	file.open(filename, std::ios::in);
-	std::cout << "Attempting to open file: " << filename << "as deck";
 	std::string temp;
 	std::string name;
 	int count;

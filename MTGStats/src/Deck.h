@@ -1,6 +1,6 @@
 #pragma once
 
-#include <iostream>
+
 #include <vector>
 #include "MTG_UUID.h"
 #include "imgui.h"

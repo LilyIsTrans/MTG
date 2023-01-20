@@ -1,11 +1,13 @@
 #include "Deck.h"
 
+
+
 int int_from_id(uuids::uuid id)
 {
 	int acc = 0;
-	for (size_t i = 0; i < sizeof(int); ++i)
+	for (size_t i = 0; i < sizeof(id); ++i)
 	{
-		acc |= ((int)(id.as_bytes()[i]) << i * 8);
+		acc ^= ((int)(id.as_bytes()[i]) << (i % sizeof(int)) * 8);
 	}
 	return acc;
 }
