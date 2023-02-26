@@ -4,7 +4,7 @@
 #include "Walnut/Image.h"
 
 #include <fstream>
-#include "MTG_UUID.h"
+#include "uuid_utils.h"
 #include "Deck.h"
 #include <exception>
 #include "stats.h"
@@ -61,7 +61,7 @@ public:
 			newName.append(deck.newCardName);
 			Card newCard = Card(newName);
 			newCard.count = deck.newCardCount;
-			deck[newCard.id.id] = newCard;
+			deck[gen_uuid()] = newCard;
 			std::fill(deck.newCardName, deck.newCardName + sizeof(deck.newCardName), 0);
 		}
 

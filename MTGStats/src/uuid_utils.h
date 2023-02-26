@@ -3,7 +3,6 @@
 #include "uuid.h"
 #include <random>
 #include <array>
-#include <string>
 
 static bool statics_initialized = false;
 
@@ -15,34 +14,10 @@ static uuids::uuid_random_generator gen(generator);
 
 
 
-
-
-class MTG_UUID
-{
-public:
-
-	MTG_UUID() {
-		if (!statics_initialized) {
-			statics_initialized = true;
-			std::generate(std::begin(seed_data), std::end(seed_data), std::ref(rd));
-		}
-		id = gen();
+inline uuids::uuid gen_uuid() {
+	if (!statics_initialized) {
+		statics_initialized = true;
+		std::generate(std::begin(seed_data), std::end(seed_data), std::ref(rd));
 	}
-
-	bool operator==(const MTG_UUID& other) {
-		return id == other.id;
-	}
-
-
-
-public:
-	uuids::uuid id;
-
-
-private:
-	
-	
-};
-
-
-
+	return gen();
+}

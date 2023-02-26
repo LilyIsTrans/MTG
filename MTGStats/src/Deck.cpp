@@ -60,12 +60,6 @@ uint64_t Deck::desired_min_hand_size() const
 Card::Card(std::string cardName)
 {
 	name = cardName;
-	id = MTG_UUID();
 	count = 0;
 	desired_minimum = 0;
-}
-
-bool Card::operator==(const Card& other)
-{
-	return id == other.id;
 }

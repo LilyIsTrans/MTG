@@ -2,7 +2,7 @@
 #include <string>
 #include "Deck.h"
 #include <fstream>
-#include "MTG_UUID.h"
+#include "uuid_utils.h"
 
 void load_deck_from_file(Deck& deck, std::string filename)
 {
@@ -25,7 +25,7 @@ void load_deck_from_file(Deck& deck, std::string filename)
 		Card card = Card(name);
 		card.count = count;
 		card.desired_minimum = desired_amount;
-		deck.cards[card.id.id] = card;
+		deck.cards[gen_uuid()] = card;
 	}
 	file.close();
 }
