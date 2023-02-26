@@ -1,0 +1,70 @@
+{
+	name: "Koma, Cosmos Serpent"
+	count: 4
+	desired_minimum: 0
+}
+{
+	name: "Quest for Ula's Temple"
+	count: 4
+	desired_minimum: 1
+}
+{
+	name: "Clockspinning"
+	count: 4
+	desired_minimum: 0
+}
+{
+	name: "Serpent of Yawning Depths"
+	count: 4
+	desired_minimum: 0
+}
+{
+	name: "Spawning Kraken"
+	count: 4
+	desired_minimum: 0
+}
+{
+	name: "Fog Bank"
+	count: 1
+	desired_minimum: 0
+}
+{
+	name: "Tromokratis"
+	count: 4
+	desired_minimum: 0
+}
+{
+	name: "Inkwell Leviathan"
+	count: 4
+	desired_minimum: 0
+}
+{
+	name: "Gyruda, Doom of the Depths"
+	count: 4
+	desired_minimum: 0
+}
+{
+	name: "Trench Gorger"
+	count: 4
+	desired_minimum: 0
+}
+{
+	name: "Reservoir Kraken"
+	count: 4
+	desired_minimum: 0
+}
+{
+	name: "Nemesis of Reason"
+	count: 4
+	desired_minimum: 0
+}
+{
+	name: "Turn Aside"
+	count: 1
+	desired_minimum: 0
+}
+{
+	name: "Island"
+	count: 14
+	desired_minimum: 1
+}

@@ -7,26 +7,25 @@ int int_from_id(uuids::uuid id)
 	int acc = 0;
 	for (size_t i = 0; i < sizeof(id); ++i)
 	{
-		acc ^= ((int)(id.as_bytes()[i]) << (i % sizeof(int)) * 8);
+		acc ^= (static_cast<int>(id.as_bytes()[i]) << (i % sizeof(int)) * 8);
 	}
 	return acc;
 }
 
+
 std::ostream& operator<<(std::ostream& os, const Card& card)
 {
-	// TODO: insert return statement here
 	os << card.name;
 	return os;
 }
 
 Deck::Deck()
 {
-	cards.reserve(120);
-	newCardName[0] = 0;
-	newCardCount = 0;
+	cards.reserve(120); // In MTG, the largest commonly used deck size I know of is 120, so I made sure the table could handle at least that many before needing to resize.
 }
 
-Card& Deck::operator[](uuids::uuid idx)
+
+Card& Deck::operator[](const uuids::uuid& idx)
 {
 	return cards[idx];
 }

@@ -3,16 +3,19 @@
 
 #include "Walnut/Image.h"
 
+#include "imgui_stdlib.h"
+
+
 #include <fstream>
 #include "uuid_utils.h"
 #include "Deck.h"
-#include <exception>
 #include "stats.h"
 #include "filing.h"
 
 class ExampleLayer : public Walnut::Layer
 {
 public:
+
 	// CALLED EACH FRAME
 	virtual void OnUIRender() override
 	{
@@ -20,12 +23,26 @@ public:
 
 		RenderDesiredHandConfig();
 		
+		RenderLoadFileDialogue();
+	}
+
+	void RenderLoadFileDialogue()
+	{
+		static int last_load_failed;
+		static int last_save_failed;
 		ImGui::Begin("Load");
-		ImGui::InputText("File", buf, sizeof(buf));
+		if (last_load_failed)
+			ImGui::TextColored(ImVec4(1, 0, 0, 1), "File not found!");
+		ImGui::InputText("File", &buf);
 		if (ImGui::Button("Load"))
 		{
-			std::string filename(buf);
-			load_deck_from_file(deck, filename);
+			const std::filesystem::path filename(buf);
+			last_load_failed = load_deck_from_file(deck, filename);
+		}
+		if (ImGui::Button("Save"))
+		{
+			const std::filesystem::path filename(buf);
+			last_save_failed = save_deck_to_file(deck, filename, false);
 		}
 
 		ImGui::End();
@@ -40,7 +57,7 @@ public:
 		ImGui::Text("Cards desired in hand: %d", deck.desired_min_hand_size());
 		long double prob = 1;
 		uint64_t cards_accounted_for = 0;
-		for (auto [id, card] : deck.cards)
+		for (auto& [id, card] : deck.cards)
 		{
 			prob *= n_or_more_matches((uint64_t)card.desired_minimum, deck.card_count() - cards_accounted_for, (uint64_t)hand_size - cards_accounted_for, (uint64_t)card.count);
 			cards_accounted_for += (uint64_t)card.desired_minimum;
@@ -51,18 +68,20 @@ public:
 	}
 
 	void RenderMainDeck() {
+		static std::string newCardName;
+		static int newCardCount;
 		ImGui::Begin("Deck");
 		ImGui::Text("New card: ");
-		ImGui::InputText("Name", deck.newCardName, sizeof(deck.newCardName));
-		ImGui::DragInt("Count", &deck.newCardCount);
+		ImGui::InputText("Name", &newCardName);
+		ImGui::DragInt("Count", &newCardCount);
 		if (ImGui::Button("Add to deck"))
 		{
 			std::string newName = "";
-			newName.append(deck.newCardName);
+			newName.append(newCardName);
 			Card newCard = Card(newName);
-			newCard.count = deck.newCardCount;
+			newCard.count = newCardCount;
 			deck[gen_uuid()] = newCard;
-			std::fill(deck.newCardName, deck.newCardName + sizeof(deck.newCardName), 0);
+			newCardName.clear();
 		}
 
 		std::vector<uuids::uuid> to_delete;
@@ -92,13 +111,13 @@ public:
 	
 	ExampleLayer()
 	{
-		std::fill(buf, buf + sizeof(buf), 0);
+		buf = "";
 	}
 
 private:
 	Deck deck;
 	int hand_size = 7;
-	char buf[256];
+	std::string buf;
 };
 
 // ENTRY POINT
