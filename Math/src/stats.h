@@ -8,7 +8,6 @@ constexpr long double factorial(const uint64_t n)
 {
 	if (!(n > 0 && n < 4000))
 	{
-		//std::cout << "Attempted to compute " << n << "!" << std::endl;
 		return 1.0;
 	}
 	long double acc = 1;
