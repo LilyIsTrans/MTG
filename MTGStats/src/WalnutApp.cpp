@@ -30,9 +30,23 @@ public:
 	{
 		static int last_load_failed;
 		static int last_save_failed;
+		static bool force_overwrite;
 		ImGui::Begin("Load");
 		if (last_load_failed)
 			ImGui::TextColored(ImVec4(1, 0, 0, 1), "File not found!");
+		if (last_save_failed == -1)
+			ImGui::TextColored(ImVec4(1, 0, 0, 1), "Error occurred while saving!");
+		if (last_save_failed == 1)
+		{
+			ImGui::TextColored(ImVec4(1, 0, 0, 1), "File already exists. Are you sure you want to overwrite?");
+			ImGui::Checkbox("Confirm Overwrite", &force_overwrite);
+		}
+		else
+		{
+			force_overwrite = false;
+		}
+			
+			
 		ImGui::InputText("File", &buf);
 		if (ImGui::Button("Load"))
 		{
@@ -42,7 +56,7 @@ public:
 		if (ImGui::Button("Save"))
 		{
 			const std::filesystem::path filename(buf);
-			last_save_failed = save_deck_to_file(deck, filename, false);
+			last_save_failed = save_deck_to_file(deck, filename, force_overwrite);
 		}
 
 		ImGui::End();
@@ -106,12 +120,6 @@ public:
 
 
 		ImGui::End();
-	}
-
-	
-	ExampleLayer()
-	{
-		buf = "";
 	}
 
 private:
