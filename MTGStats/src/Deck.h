@@ -6,7 +6,8 @@
 #include "imgui.h"
 #include <unordered_map>
 
-
+// This helper function hashes a uuid down to a basic int. This is used for interacting with Dear ImGUI,
+// which needs a unique int for each card in order to display them. 
 int int_from_id(uuids::uuid id);
 
 
