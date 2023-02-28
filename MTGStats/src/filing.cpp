@@ -5,6 +5,7 @@
 #include <format>
 #include "Deck.h"
 #include <fstream>
+#include <ranges>
 #include <vector>
 #include "uuid_utils.h"
 
@@ -76,7 +77,7 @@
 	std::ofstream file(filename);
 
 	
-	for (const auto& [id, card] : deck)
+	for (const auto& card : deck | std::views::values)
 	{
 		file << std::format(json_template, card.name, card.count, card.desired_minimum);
 	}

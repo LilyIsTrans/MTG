@@ -38,7 +38,7 @@ public:
 	}
 
 	
-	[[nodiscard]] Card(std::string name, int count, int desired_minimum) : name(name), count(count), desired_minimum(desired_minimum) {}
+	[[nodiscard]] Card(std::string name, int count, int desired_minimum) : name(std::move(name)), count(count), desired_minimum(desired_minimum) {}
 
 	//Defining the << operator on instances of card allows them to be easily printed with the normal c++ syntax.
 	friend std::ostream& operator << (std::ostream& os, const Card& card);

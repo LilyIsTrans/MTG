@@ -1,5 +1,6 @@
 #include "Deck.h"
 
+#include <ranges>
 
 
 int int_from_id(uuids::uuid id)
@@ -39,7 +40,7 @@ size_t Deck::size() const
 uint64_t Deck::card_count() const
 {
 	uint64_t acc = 0;
-	for (auto [id, card] : cards)
+	for (auto& card : cards | std::views::values)
 	{
 		acc += card.count;
 	}
@@ -49,7 +50,7 @@ uint64_t Deck::card_count() const
 uint64_t Deck::desired_min_hand_size() const
 {
 	uint64_t acc = 0;
-	for (auto [id, card] : cards)
+	for (auto card& : cards | std::views::values)
 	{
 		acc += card.desired_minimum;
 	}
@@ -58,7 +59,7 @@ uint64_t Deck::desired_min_hand_size() const
 
 Card::Card(std::string cardName)
 {
-	name = cardName;
+	name = std::move(cardName);
 	count = 0;
 	desired_minimum = 0;
 }

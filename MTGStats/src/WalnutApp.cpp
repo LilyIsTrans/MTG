@@ -7,6 +7,8 @@
 
 
 #include <fstream>
+#include <ranges>
+
 #include "uuid_utils.h"
 #include "Deck.h"
 #include "stats.h"
@@ -71,7 +73,7 @@ public:
 		ImGui::Text("Cards desired in hand: %d", deck.desired_min_hand_size());
 		long double prob = 1;
 		uint64_t cards_accounted_for = 0;
-		for (auto& [id, card] : deck.cards)
+		for (const auto& card : deck.cards | std::views::values)
 		{
 			prob *= n_or_more_matches((uint64_t)card.desired_minimum, deck.card_count() - cards_accounted_for, (uint64_t)hand_size - cards_accounted_for, (uint64_t)card.count);
 			cards_accounted_for += (uint64_t)card.desired_minimum;

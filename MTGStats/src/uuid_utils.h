@@ -22,7 +22,7 @@ static uuids::uuid_random_generator gen(generator);
 inline uuids::uuid gen_uuid() {
 	if (!statics_initialized) {
 		statics_initialized = true;
-		std::generate(std::begin(seed_data), std::end(seed_data), std::ref(rd));
+		std::ranges::generate(seed_data, std::ref(rd));
 	}
 	return gen();
 }
