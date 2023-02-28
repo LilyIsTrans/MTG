@@ -37,9 +37,9 @@ size_t deck::size() const
 	return cards.size();
 }
 
-uint64_t deck::card_count() const
+int deck::card_count() const
 {
-	uint64_t acc = 0;
+	int acc = 0;
 	for (auto& card : cards | std::views::values)
 	{
 		acc += card.count;
@@ -47,10 +47,10 @@ uint64_t deck::card_count() const
 	return acc;
 }
 
-uint64_t deck::desired_min_hand_size() const
+int deck::desired_min_hand_size() const
 {
-	uint64_t acc = 0;
-	for (auto card& : cards | std::views::values)
+	int acc = 0;
+	for (const auto& card : cards | std::views::values)
 	{
 		acc += card.desired_minimum;
 	}

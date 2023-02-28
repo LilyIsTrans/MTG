@@ -1,5 +1,5 @@
 #include "Walnut/Application.h"
-#include "Walnut/EntryPoint.h"
+#include <Walnut/EntryPoint.h>
 
 #include "Walnut/Image.h"
 
@@ -75,10 +75,13 @@ public:
 		uint64_t cards_accounted_for = 0;
 		for (const auto& card : m_deck.cards | std::views::values)
 		{
-			prob *= n_or_more_matches(static_cast<uint64_t>(card.desired_minimum), m_deck.card_count() - cards_accounted_for, static_cast<uint64_t>(m_handSize) - cards_accounted_for, static_cast<uint64_t>(card.count));
+			prob *= n_or_more_matches(static_cast<uint64_t>(card.desired_minimum),
+			                          m_deck.card_count() - cards_accounted_for,
+			                          static_cast<uint64_t>(m_handSize) - cards_accounted_for,
+			                          static_cast<uint64_t>(card.count));
 			cards_accounted_for += static_cast<uint64_t>(card.desired_minimum);
 		}
-		ImGui::Text("%f%%", prob * 100);
+		ImGui::Text("%Lf%%", prob * 100);
 		ImGui::End();
 
 	}

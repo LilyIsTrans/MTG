@@ -66,8 +66,8 @@ public:
 
 	[[nodiscard]] size_t size() const;
 
-	[[nodiscard]] uint64_t card_count() const;
-	[[nodiscard]] uint64_t desired_min_hand_size() const;
+	[[nodiscard]] int card_count() const;
+	[[nodiscard]] int desired_min_hand_size() const;
 
 	[[nodiscard]] auto begin() noexcept { return cards.begin(); }
 	[[nodiscard]] auto end() noexcept { return cards.end(); }
