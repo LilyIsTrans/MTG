@@ -38,7 +38,7 @@
 }
 
 
-int save_deck_to_file(Deck& deck, const std::filesystem::path& filename, bool overwrite)
+[[nodiscard]] int save_deck_to_file(Deck& deck, const std::filesystem::path& filename, bool overwrite)
 {
 	switch (std::filesystem::status(filename).type())
 	{
