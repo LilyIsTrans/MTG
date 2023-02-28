@@ -15,33 +15,33 @@ int int_from_id(uuids::uuid id);
 /**
  * \brief Holds information about an individual card.
  */
-class Card
+class card
 {
 public:
 	/**
 	 * \brief Construct a new Card with the specified name.
 	 *
 	 * Constructs a new Card with the specified name, setting the count and desired minimum to 0.
-	 * \param cardName The name of the new card
+	 * \param card_name The name of the new card
 	 */
-	[[nodiscard]] Card(std::string cardName);
+	[[nodiscard]] explicit card(std::string card_name);
 
 	/**
 	 * \brief Constructs a new blank Card
 	 *
 	 * Constructs a blank card with an empty name, a count of 0, and a desired minimum of 0.
 	 */
-	[[nodiscard]] Card() {
+	[[nodiscard]] card() {
 		name = "";
 		count = 0;
 		desired_minimum = 0;
 	}
 
 	
-	[[nodiscard]] Card(std::string name, int count, int desired_minimum) : name(name), count(count), desired_minimum(desired_minimum) {}
+	[[nodiscard]] card(std::string name, int count, int desired_minimum) : name(std::move(name)), count(count), desired_minimum(desired_minimum) {}
 
 	//Defining the << operator on instances of card allows them to be easily printed with the normal c++ syntax.
-	friend std::ostream& operator << (std::ostream& os, const Card& card);
+	friend std::ostream& operator << (std::ostream& os, const card& card);
 
 public:
 	std::string name;
@@ -54,14 +54,14 @@ public:
  *
  * Mostly just wraps std::unordered_map.
  */
-class Deck
+class deck
 {
 public:
 	/**
 	 * \brief Construct an empty Deck
 	 */
-	[[nodiscard]] Deck();
-	[[nodiscard]] Card& operator[](const uuids::uuid& idx);
+	[[nodiscard]] deck();
+	[[nodiscard]] card& operator[](const uuids::uuid& idx);
 
 
 	[[nodiscard]] size_t size() const;
@@ -73,5 +73,5 @@ public:
 	[[nodiscard]] auto end() noexcept { return cards.end(); }
 
 public:
-	std::unordered_map<uuids::uuid, Card> cards;
+	std::unordered_map<uuids::uuid, card> cards;
 };

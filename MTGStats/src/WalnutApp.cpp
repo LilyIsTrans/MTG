@@ -7,12 +7,14 @@
 
 
 #include <fstream>
+#include <ranges>
+
 #include "uuid_utils.h"
 #include "Deck.h"
 #include "stats.h"
 #include "filing.h"
 
-class ExampleLayer : public Walnut::Layer
+class application : public Walnut::Layer
 {
 public:
 
@@ -21,7 +23,7 @@ public:
 	{
 		RenderMainDeck();
 
-		RenderDesiredHandConfig();
+		render_desired_hand_config();
 		
 		RenderLoadFileDialogue();
 	}
@@ -62,7 +64,7 @@ public:
 		ImGui::End();
 	}
 
-	void RenderDesiredHandConfig()
+	void render_desired_hand_config()
 	{
 		ImGui::Begin("Desired Hand");
 		ImGui::DragInt("Hand Size", &hand_size);
@@ -71,10 +73,10 @@ public:
 		ImGui::Text("Cards desired in hand: %d", deck.desired_min_hand_size());
 		long double prob = 1;
 		uint64_t cards_accounted_for = 0;
-		for (auto& [id, card] : deck.cards)
+		for (const auto& card : deck.cards | std::views::values)
 		{
-			prob *= n_or_more_matches((uint64_t)card.desired_minimum, deck.card_count() - cards_accounted_for, (uint64_t)hand_size - cards_accounted_for, (uint64_t)card.count);
-			cards_accounted_for += (uint64_t)card.desired_minimum;
+			prob *= n_or_more_matches(static_cast<uint64_t>(card.desired_minimum), deck.card_count() - cards_accounted_for, static_cast<uint64_t>(hand_size) - cards_accounted_for, static_cast<uint64_t>(card.count));
+			cards_accounted_for += static_cast<uint64_t>(card.desired_minimum);
 		}
 		ImGui::Text("%f%%", prob * 100);
 		ImGui::End();
@@ -92,7 +94,7 @@ public:
 		{
 			std::string newName = "";
 			newName.append(newCardName);
-			Card newCard = Card(newName);
+			card newCard = card(newName);
 			newCard.count = newCardCount;
 			deck[gen_uuid()] = newCard;
 			newCardName.clear();
@@ -123,7 +125,7 @@ public:
 	}
 
 private:
-	Deck deck;
+	deck deck;
 	int hand_size = 7;
 	std::string buf;
 };
@@ -135,7 +137,7 @@ Walnut::Application* Walnut::CreateApplication(int argc, char** argv)
 	spec.Name = "MTG_Deck_Probability_Analyzer";
 
 	Walnut::Application* app = new Walnut::Application(spec);
-	app->PushLayer<ExampleLayer>();
+	app->PushLayer<application>();
 	app->SetMenubarCallback([app]()
 	{
 		if (ImGui::BeginMenu("File"))

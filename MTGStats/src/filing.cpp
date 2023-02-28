@@ -5,11 +5,12 @@
 #include <format>
 #include "Deck.h"
 #include <fstream>
+#include <ranges>
 #include <vector>
 #include "uuid_utils.h"
 
 
-[[nodiscard]] int load_deck_from_file(Deck& deck, const std::filesystem::path& filename)
+[[nodiscard]] int load_deck_from_file(deck& deck, const std::filesystem::path& filename)
 {
 	std::vector<std::string> objects;
 	try
@@ -51,7 +52,7 @@
 }
 
 
-[[nodiscard]] int save_deck_to_file(Deck& deck, const std::filesystem::path& filename, bool overwrite)
+[[nodiscard]] int save_deck_to_file(deck& deck, const std::filesystem::path& filename, bool overwrite)
 {
 	switch (std::filesystem::status(filename).type())
 	{
@@ -76,7 +77,7 @@
 	std::ofstream file(filename);
 
 	
-	for (const auto& [id, card] : deck)
+	for (const auto& card : deck | std::views::values)
 	{
 		file << std::format(json_template, card.name, card.count, card.desired_minimum);
 	}

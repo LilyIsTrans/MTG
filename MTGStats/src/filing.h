@@ -12,7 +12,7 @@
  * \param filename A full or relative path to the text file containing the information on the deck
  * \return 0 if success, -1 otherwise
  */
-[[nodiscard]] int load_deck_from_file(Deck& deck, const std::filesystem::path& filename);
+[[nodiscard]] int load_deck_from_file(deck& deck, const std::filesystem::path& filename);
 
 /**
  * \brief Handles saving a deck to a file
@@ -22,4 +22,4 @@
  * In conjunction with the 1 return value, can be used to ask user for confirmation before overwriting file.
  * \return 0 if success, 1 if file exists, is not empty, and overwrite was false, -1 otherwise
  */
-[[nodiscard]] int save_deck_to_file(Deck& deck, const std::filesystem::path& filename, bool overwrite);
+[[nodiscard]] int save_deck_to_file(deck& deck, const std::filesystem::path& filename, bool overwrite);
