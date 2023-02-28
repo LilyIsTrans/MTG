@@ -54,22 +54,16 @@
 
 [[nodiscard]] int save_deck_to_file(deck& deck, const std::filesystem::path& filename, bool overwrite)
 {
-	switch (std::filesystem::status(filename).type())
+	
+	if (std::filesystem::status(filename).type() != std::filesystem::file_type::regular && std::filesystem::status(filename).type() != std::filesystem::file_type::not_found)
 	{
-	case std::filesystem::file_type::regular:
-		{
-		if (std::filesystem::file_size(filename) == 0)
-		{
-			break;
-		}
-		else
-		{
-			return 1;
-		}
-		};
-	case std::filesystem::file_type::not_found: break;
-	default: return -1;
+		return -1;
 	}
+	if (std::filesystem::status(filename).type() == std::filesystem::file_type::regular && !overwrite && std::filesystem::file_size(filename) != 0)
+	{
+		return 1;
+	}
+	
 
 	const std::format_string<const std::string&, const int&, const int&> json_template = "{{\n\tname: \"{}\"\n\tcount: {}\n\tdesired_minimum: {}\n}}\n";
 
