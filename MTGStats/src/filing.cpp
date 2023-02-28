@@ -5,35 +5,48 @@
 #include <format>
 #include "Deck.h"
 #include <fstream>
+#include <vector>
 #include "uuid_utils.h"
 
 
 [[nodiscard]] int load_deck_from_file(Deck& deck, const std::filesystem::path& filename)
 {
-	if (std::filesystem::status(filename).type() != std::filesystem::file_type::regular)
+	std::vector<std::string> objects;
+	try
+	{
+		std::ifstream file(filename);
+		
+		while (!file.eof())
+		{
+			std::stringbuf buf;
+			file.ignore(std::numeric_limits<std::streamsize>::max(), '{');
+			file.get(buf, '}');
+			if (file.good())
+				objects.emplace_back(buf.view());
+			
+		}
+	}
+	catch (...)
 	{
 		return -1;
 	}
-	std::ifstream file(filename);
-	while (file.good())
+	for (std::string& ob: objects)
 	{
-		std::stringbuf buffer;
-		Card card;
-		file.ignore(std::numeric_limits<std::streamsize>::max(), '"');
-		file.get(buffer, '"');
-		card.name = buffer.str();
-		buffer = std::stringbuf();
-		file.ignore(std::numeric_limits<std::streamsize>::max(), ':');
-		file.get(buffer, '\n');
-		card.count = std::stoi(buffer.str());
-		buffer = std::stringbuf();
-		file.ignore(std::numeric_limits<std::streamsize>::max(), ':');
-		file.get(buffer, '\n');
-		card.desired_minimum = std::stoi(buffer.str());
-		buffer = std::stringbuf();
-		deck[gen_uuid()] = card;
-		file.ignore(std::numeric_limits<std::streamsize>::max(), '{');
+		const std::string nums = "0123456789";
+		const size_t begin_count = ob.find_first_of(nums, ob.find("count:"));
+		const size_t end_count = ob.find_first_not_of(nums, begin_count);
+		const size_t begin_desired_min = ob.find_first_of(nums, ob.find("desired_minimum:"));
+		const size_t end_desired_min = ob.find_first_not_of(nums, begin_desired_min);
+		const size_t begin_name = ob.find('"', ob.find("name:")) + 1;
+		const size_t end_name = ob.find('"', begin_name);
+		deck.cards.try_emplace(gen_uuid(),
+				std::string(ob.substr(begin_name, end_name - begin_name)),
+				std::stoi(ob.substr(begin_count, end_count - begin_count)),
+				std::stoi(ob.substr(begin_desired_min, end_desired_min - begin_desired_min))
+			);
 	}
+	
+	
 	return 0;
 }
 
