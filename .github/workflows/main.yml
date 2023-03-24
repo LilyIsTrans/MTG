@@ -1,0 +1,11 @@
+on:
+  push:
+    branches:
+    - master
+jobs:
+  run-premake-setup:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: ./scripts/Setup.bat
+  
