@@ -7,4 +7,4 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
-      - run: ./MTG/scripts/Setup.bat
+      - run: tree
